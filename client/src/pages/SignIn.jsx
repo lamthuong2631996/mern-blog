@@ -7,6 +7,7 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 export const SignIn = () => {
   const [formData, setFormData] = useState({});
   const { loading, error: errorMessage } = useSelector((state) => state.user);
@@ -28,7 +29,7 @@ export const SignIn = () => {
       if (data.success === false) {
         dispatch(signInFailure(data.message));
       }
-      setLoading(false);
+      
       if (res.ok) {
         dispatch(signInSuccess(data));
         navigate("/");
@@ -95,7 +96,7 @@ export const SignIn = () => {
               )}
             </Button>
             {errorMessage}
-            {/* <OAuth /> */}
+           <OAuth />
           </form>
         </div>
       </div>
