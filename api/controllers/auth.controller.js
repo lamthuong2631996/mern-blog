@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import bcryptjs from "bcryptjs";
+import bcrypt from "bcrypt";
 import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
@@ -10,7 +10,7 @@ export const google = async (req, res, next) => {
     if (user) {
       const token = jwt.sign(
         { id: user._id, isAdmin: user.isAdmin },
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET_KEY
       );
       const { password, ...rest } = user._doc;
       res
@@ -23,7 +23,7 @@ export const google = async (req, res, next) => {
       const generatedPassword =
         Math.random().toString(36).slice(-8) +
         Math.random().toString(36).slice(-8);
-      const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+      const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
       const newUser = new User({
         username:
           name.toLowerCase().split(" ").join("") +
@@ -50,8 +50,8 @@ export const google = async (req, res, next) => {
   }
 };
 export const signin = async (req, res, next) => {
-  const { email, password } = req.body;
-
+  const { email, password } = req.body
+  
   if (!email || !password || email === "" || password === "") {
     next(errorHandler(400, "All fields are required"));
   }
@@ -60,8 +60,10 @@ export const signin = async (req, res, next) => {
     const validUser = await User.findOne({ email });
     if (!validUser) {
       return next(errorHandler(404, "User not found"));
+     
     }
-    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    const validPassword = await bcrypt.compare(password, validUser.password);
+    console.log(validPassword)
     if (!validPassword) {
       return next(errorHandler(400, "Invalid password"));
     }
@@ -94,7 +96,7 @@ export const signup = async (req, res, next) => {
   ) {
     next(errorHandler(400, "All fields are required"));
   }
-  const hashedPassword = bcryptjs.hashSync(password, 10);
+  const hashedPassword = bcrypt.hashSync(password, 10);
 
   const newUser = new User({
     username,
