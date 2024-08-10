@@ -16,6 +16,7 @@ import UpdatePost from './pages/UpdatePost';
 import { Search } from "./pages/Search";
 import FooterCom from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
+import PostPage from "./pages/PostPage";
 
 export default function App() {
   return (
@@ -36,8 +37,8 @@ export default function App() {
           <Route path="/update-post/:postId" element={<UpdatePost />} />
         </Route>
 
-        {/* <Route path="/projects" element={<Projects />} />
-        <Route path="/post/:postSlug" element={<PostPage />} /> */}
+        {/* <Route path="/projects" element={<Projects />} /> */}
+        <Route path="/post/:postSlug" element={<PostPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
