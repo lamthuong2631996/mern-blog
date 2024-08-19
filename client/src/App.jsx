@@ -11,17 +11,16 @@ import Footer from "./components/Footer";
 import OnlyAdminPrivateRoute from './components/OnlyAdminPrivateRoute';
 import CreatePost from './pages/CreatePost';
 import UpdatePost from './pages/UpdatePost';
-// import PostPage from './pages/PostPage';
-// import ScrollToTop from './components/ScrollToTop';
+import PostPage from './pages/PostPage';
+import ScrollToTop from './components/ScrollToTop';
 import { Search } from "./pages/Search";
 import FooterCom from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
-import PostPage from "./pages/PostPage";
 
 export default function App() {
   return (
     <BrowserRouter>
-      {/* <ScrollToTop /> */}
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
